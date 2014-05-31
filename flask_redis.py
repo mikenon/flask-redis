@@ -1,7 +1,8 @@
 from redis import Redis as RedisClass
 import inspect
-import urlparse
+import urllib.parse
 from werkzeug.utils import import_string
+import collections
 
 __all__ = ('Redis',)
 
@@ -54,6 +55,6 @@ class Redis(object):
         """
         for attr in dir(connection):
             value = getattr(connection, attr)
-            if attr.startswith('_') or not callable(value):
+            if attr.startswith('_') or not isinstance(value, collections.Callable):
                 continue
             self.__dict__[attr] = value
